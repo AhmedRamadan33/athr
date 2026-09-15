@@ -231,4 +231,26 @@ class OrderTest extends TestCase
 
         $this->placeOrder(Customer::factory()->create(), $variant, 1, $coupon->code);
     }
+
+    public function test_double_submitting_checkout_does_not_create_two_orders_from_the_same_cart(): void
+    {
+        Notification::fake();
+
+        $customer = Customer::factory()->create();
+        $variant = ProductVariant::factory()->create(['stock_quantity' => 10]);
+        $address = Address::factory()->for($customer)->create(['governorate' => 'القاهرة']);
+        ShippingZone::firstOrCreate(['governorate' => 'القاهرة'], ['cost' => 50, 'is_active' => true]);
+
+        $cart = app(CartService::class)->currentCart($customer->id, null);
+        app(CartService::class)->addItem($cart, $variant, 1);
+
+        $cartSnapshot = $cart->fresh('items.productVariant.product');
+
+        app(OrderService::class)->placeOrder($customer, $cartSnapshot, $address, 'cod', null, null);
+        $this->assertDatabaseCount('orders', 1);
+
+        $this->expectException(ValidationException::class);
+
+        app(OrderService::class)->placeOrder($customer, $cartSnapshot, $address, 'cod', null, null);
+    }
 }

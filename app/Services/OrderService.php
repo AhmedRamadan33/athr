@@ -84,6 +84,13 @@ class OrderService
         $total = $subtotal - $discount + $shippingCost;
 
         return DB::transaction(function () use ($customer, $cart, $address, $paymentMethod, $notes, $coupon, $subtotal, $discount, $shippingCost, $total) {
+            $lockedCart = Cart::whereKey($cart->id)->lockForUpdate()->first();
+            $cartItems = $lockedCart?->items()->with('productVariant.product')->get() ?? collect();
+
+            if ($cartItems->isEmpty()) {
+                throw ValidationException::withMessages(['cart' => 'السلة فارغة، أو تم تنفيذ هذا الطلب بالفعل.']);
+            }
+
             if ($coupon) {
                 $lockedCoupon = $this->coupons->query()->whereKey($coupon->id)->lockForUpdate()->firstOrFail();
 
@@ -109,7 +116,7 @@ class OrderService
                 'notes' => $notes,
             ]);
 
-            foreach ($cart->items as $item) {
+            foreach ($cartItems as $item) {
                 $lockedVariant = ProductVariant::whereKey($item->product_variant_id)->lockForUpdate()->firstOrFail();
 
                 if ($item->quantity > $lockedVariant->stock_quantity) {
@@ -136,7 +143,7 @@ class OrderService
                 $coupon->increment('used_count');
             }
 
-            $this->cartService->clear($cart);
+            $this->cartService->clear($lockedCart);
 
             Notification::send(Admin::permission('orders.manage')->get(), new NewOrderNotification($order));
 
