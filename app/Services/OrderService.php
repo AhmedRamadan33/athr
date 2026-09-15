@@ -84,6 +84,16 @@ class OrderService
         $total = $subtotal - $discount + $shippingCost;
 
         return DB::transaction(function () use ($customer, $cart, $address, $paymentMethod, $notes, $coupon, $subtotal, $discount, $shippingCost, $total) {
+            if ($coupon) {
+                $lockedCoupon = $this->coupons->query()->whereKey($coupon->id)->lockForUpdate()->firstOrFail();
+
+                if (! $lockedCoupon->isUsable($subtotal)) {
+                    throw ValidationException::withMessages([
+                        'coupon' => 'كود الخصم غير صالح أو منتهى الصلاحية.',
+                    ]);
+                }
+            }
+
             $order = $this->orders->create([
                 'order_number' => $this->generateOrderNumber(),
                 'customer_id' => $customer->id,
@@ -100,6 +110,14 @@ class OrderService
             ]);
 
             foreach ($cart->items as $item) {
+                $lockedVariant = ProductVariant::whereKey($item->product_variant_id)->lockForUpdate()->firstOrFail();
+
+                if ($item->quantity > $lockedVariant->stock_quantity) {
+                    throw ValidationException::withMessages([
+                        'cart' => 'المنتج "'.$item->productVariant->product->name.'" غير متوفر بالكمية المطلوبة.',
+                    ]);
+                }
+
                 $order->items()->create([
                     'product_variant_id' => $item->product_variant_id,
                     'product_name' => $item->productVariant->product->name,
@@ -109,7 +127,7 @@ class OrderService
                     'total' => $item->price * $item->quantity,
                 ]);
 
-                $this->decrementStockAndCheckLowStock($item->productVariant, $item->quantity);
+                $this->decrementStockAndCheckLowStock($lockedVariant, $item->quantity);
             }
 
             $order->statusHistories()->create(['status' => 'pending']);

@@ -31,7 +31,7 @@ class OrderTest extends TestCase
     protected function placeOrder(Customer $customer, ProductVariant $variant, int $quantity, ?string $couponCode = null): \App\Models\Order
     {
         $address = Address::factory()->for($customer)->create(['governorate' => 'القاهرة']);
-        ShippingZone::factory()->create(['governorate' => 'القاهرة', 'cost' => 50, 'is_active' => true]);
+        ShippingZone::firstOrCreate(['governorate' => 'القاهرة'], ['cost' => 50, 'is_active' => true]);
 
         $cart = app(CartService::class)->currentCart($customer->id, null);
         app(CartService::class)->addItem($cart, $variant, $quantity);
@@ -188,5 +188,47 @@ class OrderTest extends TestCase
         $this->placeOrder($customer, $variant, 2);
 
         Notification::assertSentTo($admin, \App\Notifications\LowStockNotification::class);
+    }
+
+    public function test_second_order_for_the_last_unit_is_rejected_even_from_a_stale_cart_snapshot(): void
+    {
+        Notification::fake();
+
+        $variant = ProductVariant::factory()->create(['stock_quantity' => 1]);
+        ShippingZone::factory()->create(['governorate' => 'القاهرة', 'cost' => 50, 'is_active' => true]);
+
+        $customerA = Customer::factory()->create();
+        $addressA = Address::factory()->for($customerA)->create(['governorate' => 'القاهرة']);
+        $cartA = app(CartService::class)->currentCart($customerA->id, null);
+        app(CartService::class)->addItem($cartA, $variant, 1);
+
+        $customerB = Customer::factory()->create();
+        $addressB = Address::factory()->for($customerB)->create(['governorate' => 'القاهرة']);
+        $cartB = app(CartService::class)->currentCart($customerB->id, null);
+        app(CartService::class)->addItem($cartB, $variant, 1);
+
+        $cartBStaleSnapshot = $cartB->fresh('items.productVariant.product');
+
+        app(OrderService::class)->placeOrder($customerA, $cartA->fresh('items.productVariant.product'), $addressA, 'cod', null, null);
+        $this->assertSame(0, $variant->fresh()->stock_quantity);
+
+        $this->expectException(ValidationException::class);
+
+        app(OrderService::class)->placeOrder($customerB, $cartBStaleSnapshot, $addressB, 'cod', null, null);
+    }
+
+    public function test_coupon_usage_limit_is_enforced_at_order_time_not_only_at_pre_check(): void
+    {
+        Notification::fake();
+
+        $variant = ProductVariant::factory()->create(['stock_quantity' => 10]);
+        $coupon = Coupon::factory()->create(['usage_limit' => 1, 'used_count' => 0]);
+
+        $this->placeOrder(Customer::factory()->create(), $variant, 1, $coupon->code);
+        $this->assertSame(1, $coupon->fresh()->used_count);
+
+        $this->expectException(ValidationException::class);
+
+        $this->placeOrder(Customer::factory()->create(), $variant, 1, $coupon->code);
     }
 }
