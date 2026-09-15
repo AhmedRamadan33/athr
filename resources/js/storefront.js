@@ -40,7 +40,7 @@ window.confirmAction = (form, message = 'هل أنت متأكد؟') => {
 };
 
 window.toggleMobileMenu = () => {
-    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    document.getElementById('main-nav')?.classList.toggle('is-open');
 };
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -7,23 +7,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div>
                 @php $mainImage = $product->images->first()?->path; @endphp
-                <div class="aspect-square bg-white rounded-2xl border border-zinc-200 overflow-hidden">
-                    @if ($mainImage)
-                        <img src="{{ Storage::url($mainImage) }}" alt="{{ $product->name }}" class="w-full h-full object-cover" id="main-product-image">
-                    @else
-                        <div class="w-full h-full flex items-center justify-center text-zinc-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                    @endif
+                <div class="aspect-square bg-white border border-zinc-200 overflow-hidden">
+                    <img src="{{ $mainImage ? Storage::url($mainImage) : asset('img/product.png') }}" alt="{{ $product->name }}" class="w-full h-full object-cover" id="main-product-image">
                 </div>
 
                 @if ($product->images->count() > 1)
                     <div class="flex gap-3 mt-3">
                         @foreach ($product->images as $image)
                             <button type="button" onclick="document.getElementById('main-product-image').src = this.querySelector('img').src"
-                                class="w-16 h-16 rounded-xl overflow-hidden border border-zinc-200">
+                                class="w-16 h-16 overflow-hidden border border-zinc-200">
                                 <img src="{{ Storage::url($image->path) }}" class="w-full h-full object-cover" alt="">
                             </button>
                         @endforeach
@@ -37,7 +29,7 @@
                         @if ($product->brand)
                             <p class="text-brand-600 font-medium">{{ $product->brand->name }}</p>
                         @endif
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1">{{ $product->name }}</h1>
+                        <h1 class="font-serif text-3xl sm:text-4xl font-semibold text-ink-900 mt-1">{{ $product->name }}</h1>
                     </div>
 
                     @auth('customer')

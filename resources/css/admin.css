@@ -28,6 +28,19 @@
     }
 }
 
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="tel"],
+input[type="search"],
+input[type="file"],
+textarea {
+    padding: 0.625rem 0.875rem;
+    min-height: 42px;
+}
+
 .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple {
     border-radius: 0.75rem;
@@ -66,4 +79,26 @@
 
 nav[role="navigation"] svg {
     transform: scaleX(-1);
+}
+
+#sidebar nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+#sidebar nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidebar nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#sidebar nav::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 9999px;
+}
+
+#sidebar nav::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
 }

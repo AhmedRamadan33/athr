@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="bg-white rounded-2xl border border-zinc-200">
-        <form method="GET" class="p-4 sm:p-5 border-b border-zinc-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <form method="GET" class="p-4 sm:p-5 border-b border-zinc-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="ابحث فى الوصف..."
                 class="rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500 lg:col-span-2">
 
@@ -27,14 +27,12 @@
                 @endforeach
             </select>
 
-            <div class="flex gap-2">
-                <input type="date" name="from" value="{{ request('from') }}"
-                    class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                <input type="date" name="to" value="{{ request('to') }}"
-                    class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-            </div>
+            <input type="date" name="from" value="{{ request('from') }}"
+                class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
+            <input type="date" name="to" value="{{ request('to') }}"
+                class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
 
-            <button type="submit" class="bg-zinc-800 hover:bg-zinc-900 text-white text-sm font-medium rounded-xl px-4 py-2 lg:col-span-5 lg:w-fit">
+            <button type="submit" class="bg-zinc-800 hover:bg-zinc-900 text-white text-sm font-medium rounded-xl px-4 py-2 sm:col-span-2 lg:col-span-6 lg:w-fit">
                 بحث وتصفية
             </button>
         </form>

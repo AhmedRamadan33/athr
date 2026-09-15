@@ -2,7 +2,7 @@
 
 @php
     $isEdit = $admin->exists;
-    $pageTitle = $isEdit ? 'تعديل بيانات الأدمن' : 'إضافة أدمن جديد';
+    $pageTitle = $isEdit ? 'تعديل بيانات المستخدم' : 'إضافة مستخدم جديد';
 @endphp
 
 @section('title', $pageTitle)

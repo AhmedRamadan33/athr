@@ -20,7 +20,11 @@ class ProductCatalogService
     {
         return $this->products->query()
             ->where('is_active', true)
-            ->with(['variants' => fn ($q) => $q->where('is_active', true)->orderBy('price')])
+            ->with([
+                'brand',
+                'images',
+                'variants' => fn ($q) => $q->where('is_active', true)->orderBy('price'),
+            ])
             ->latest()
             ->limit($limit)
             ->get();

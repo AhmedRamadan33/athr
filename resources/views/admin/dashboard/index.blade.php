@@ -29,7 +29,7 @@
             <p class="text-2xl font-bold mt-2 text-ink-900">{{ $customersCount }}</p>
         </div>
         <div class="bg-white rounded-2xl border border-zinc-200 p-5">
-            <p class="text-sm text-zinc-500">عدد الأدمنز</p>
+            <p class="text-sm text-zinc-500">عدد المستخدمين</p>
             <p class="text-2xl font-bold mt-2 text-ink-900">{{ $adminsCount }}</p>
         </div>
         <div class="bg-white rounded-2xl border border-zinc-200 p-5">

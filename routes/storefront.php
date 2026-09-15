@@ -9,8 +9,11 @@ use App\Http\Controllers\Storefront\Auth\RegisterController;
 use App\Http\Controllers\Storefront\Auth\ResetPasswordController;
 use App\Http\Controllers\Storefront\CartController;
 use App\Http\Controllers\Storefront\CheckoutController;
+use App\Http\Controllers\Storefront\ContactMessageController;
 use App\Http\Controllers\Storefront\HomeController;
+use App\Http\Controllers\Storefront\NewsletterController;
 use App\Http\Controllers\Storefront\OrderController;
+use App\Http\Controllers\Storefront\PageController;
 use App\Http\Controllers\Storefront\ProductController;
 use App\Http\Controllers\Storefront\ReviewController;
 use App\Http\Controllers\Storefront\WishlistController;
@@ -21,6 +24,15 @@ Route::name('storefront.')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/category/{category:slug}', [ProductController::class, 'category'])->name('category.show');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
+
+    Route::get('/story', [PageController::class, 'story'])->name('story');
+    Route::get('/ritual', [PageController::class, 'ritual'])->name('ritual');
+    Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+    Route::post('/contact', [ContactMessageController::class, 'store'])->name('contact.store');
+    Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
+    Route::get('/newsletter/unsubscribe/{subscriber}', [NewsletterController::class, 'unsubscribe'])
+        ->middleware('signed')
+        ->name('newsletter.unsubscribe');
 
     Route::prefix('cart')->name('cart.')->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('index');

@@ -5,7 +5,7 @@
 @section('content')
     <div class="bg-white rounded-2xl shadow-2xl shadow-black/40 p-8">
         <div class="text-center mb-8">
-            <div class="mx-auto w-14 h-14 rounded-full bg-brand-500 flex items-center justify-center text-white text-2xl font-bold">أ</div>
+            <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="mx-auto w-16 h-16 object-contain">
             <h1 class="mt-4 text-xl font-bold text-ink-900">لوحة تحكم أثر</h1>
             <p class="text-sm text-zinc-500 mt-1">سجّل الدخول لإدارة المتجر</p>
         </div>

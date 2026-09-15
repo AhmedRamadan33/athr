@@ -63,9 +63,7 @@
                                 <td class="px-5 py-3">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-lg bg-zinc-100 overflow-hidden shrink-0">
-                                            @if ($product->images->first())
-                                                <img src="{{ Storage::url($product->images->first()->path) }}" class="w-full h-full object-cover" alt="">
-                                            @endif
+                                            <img src="{{ $product->images->first() ? Storage::url($product->images->first()->path) : asset('img/product.png') }}" class="w-full h-full object-cover" alt="">
                                         </div>
                                         <span class="font-medium text-ink-900">{{ $product->name }}</span>
                                     </div>

@@ -25,6 +25,21 @@ window.toggleSidebar = () => {
     document.getElementById('sidebar-backdrop')?.classList.toggle('hidden');
 };
 
+window.switchTab = (containerId, key) => {
+    document.querySelectorAll(`#${containerId} [data-tab-panel]`).forEach((panel) => {
+        panel.classList.toggle('hidden', panel.dataset.tabPanel !== key);
+    });
+
+    document.querySelectorAll(`#${containerId} [data-tab-button]`).forEach((button) => {
+        const active = button.dataset.tabButton === key;
+        button.classList.toggle('border-brand-600', active);
+        button.classList.toggle('text-brand-700', active);
+        button.classList.toggle('font-semibold', active);
+        button.classList.toggle('border-transparent', !active);
+        button.classList.toggle('text-zinc-500', !active);
+    });
+};
+
 window.confirmDelete = (form, message = 'هل أنت متأكد من الحذف؟ لا يمكن التراجع عن هذا الإجراء.') => {
     Swal.fire({
         title: 'تأكيد الحذف',
@@ -32,6 +47,25 @@ window.confirmDelete = (form, message = 'هل أنت متأكد من الحذف�
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'نعم، احذف',
+        cancelButtonText: 'إلغاء',
+        confirmButtonColor: '#a86c18',
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+
+    return false;
+};
+
+window.confirmAction = (form, message = 'هل أنت متأكد؟') => {
+    Swal.fire({
+        title: 'تأكيد',
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'نعم',
         cancelButtonText: 'إلغاء',
         confirmButtonColor: '#a86c18',
         reverseButtons: true,

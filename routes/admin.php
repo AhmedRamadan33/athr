@@ -8,11 +8,14 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\NewsletterSubscriberController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PageContentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
@@ -51,6 +54,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::middleware('permission:settings.manage,admin')->group(function () {
             Route::get('settings/{group?}', [SettingController::class, 'edit'])->name('settings.edit');
             Route::put('settings/{group}', [SettingController::class, 'update'])->name('settings.update');
+        });
+
+        Route::middleware('permission:pages.manage,admin')->group(function () {
+            Route::get('pages-content', [PageContentController::class, 'edit'])->name('page-contents.edit');
+            Route::put('pages-content/{pageKey}', [PageContentController::class, 'update'])->name('page-contents.update');
+
+            Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
+            Route::post('contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])->name('contact-messages.read');
+            Route::delete('contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
+
+            Route::get('newsletter-subscribers', [NewsletterSubscriberController::class, 'index'])->name('newsletter-subscribers.index');
+            Route::get('newsletter-subscribers/export', [NewsletterSubscriberController::class, 'export'])->name('newsletter-subscribers.export');
+            Route::get('newsletter-subscribers/compose', [NewsletterSubscriberController::class, 'compose'])->name('newsletter-subscribers.compose');
+            Route::post('newsletter-subscribers/send', [NewsletterSubscriberController::class, 'send'])->name('newsletter-subscribers.send');
+            Route::delete('newsletter-subscribers/{subscriber}', [NewsletterSubscriberController::class, 'destroy'])->name('newsletter-subscribers.destroy');
         });
 
         Route::middleware('permission:activity-log.view,admin')->group(function () {

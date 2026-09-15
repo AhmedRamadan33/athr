@@ -22,17 +22,17 @@ class NewAdminCreatedNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('تم إضافة أدمن جديد')
+            ->subject('تم إضافة مستخدم جديد')
             ->greeting('مرحبًا '.$notifiable->name)
-            ->line('تم إنشاء حساب أدمن جديد باسم: '.$this->admin->name)
+            ->line('تم إنشاء حساب مستخدم جديد باسم: '.$this->admin->name)
             ->line('البريد الإلكتروني: '.$this->admin->email);
     }
 
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => 'أدمن جديد',
-            'message' => 'تم إنشاء حساب أدمن جديد: '.$this->admin->name,
+            'title' => 'مستخدم جديد',
+            'message' => 'تم إنشاء حساب مستخدم جديد: '.$this->admin->name,
             'admin_id' => $this->admin->id,
         ];
     }

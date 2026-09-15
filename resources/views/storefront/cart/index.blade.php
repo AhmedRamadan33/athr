@@ -17,9 +17,7 @@
                     <div class="p-4 flex items-center gap-4">
                         @php $image = $item->productVariant->image ?? $item->productVariant->product->images->first()?->path; @endphp
                         <div class="w-16 h-16 rounded-xl bg-zinc-100 overflow-hidden shrink-0">
-                            @if ($image)
-                                <img src="{{ Storage::url($image) }}" class="w-full h-full object-cover" alt="">
-                            @endif
+                            <img src="{{ $image ? Storage::url($image) : asset('img/product.png') }}" class="w-full h-full object-cover" alt="">
                         </div>
 
                         <div class="flex-1 min-w-0">

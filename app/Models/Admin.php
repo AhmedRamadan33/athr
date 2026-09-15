@@ -51,7 +51,7 @@ class Admin extends Authenticatable
 
     protected function activitySubjectLabel(): string
     {
-        return 'الأدمن "'.$this->name.'"';
+        return 'المستخدم "'.$this->name.'"';
     }
 
     public function sendPasswordResetNotification($token): void

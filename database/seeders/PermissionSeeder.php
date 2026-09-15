@@ -19,6 +19,7 @@ class PermissionSeeder extends Seeder
         'shipping.manage',
         'coupons.manage',
         'reviews.manage',
+        'pages.manage',
     ];
 
     public function run(): void

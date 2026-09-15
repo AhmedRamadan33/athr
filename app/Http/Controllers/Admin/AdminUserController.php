@@ -36,7 +36,7 @@ class AdminUserController extends Controller
     {
         $this->adminUsers->create($request->validated());
 
-        return redirect()->route('admin.admins.index')->with('success', 'تم إنشاء حساب الأدمن بنجاح.');
+        return redirect()->route('admin.admins.index')->with('success', 'تم إنشاء حساب المستخدم بنجاح.');
     }
 
     public function edit(Admin $admin): View
@@ -51,20 +51,20 @@ class AdminUserController extends Controller
     {
         $this->adminUsers->update($admin, $request->validated());
 
-        return redirect()->route('admin.admins.index')->with('success', 'تم تحديث بيانات الأدمن بنجاح.');
+        return redirect()->route('admin.admins.index')->with('success', 'تم تحديث بيانات المستخدم بنجاح.');
     }
 
     public function destroy(Admin $admin): RedirectResponse
     {
         $this->adminUsers->delete($admin);
 
-        return redirect()->route('admin.admins.index')->with('success', 'تم حذف الأدمن بنجاح.');
+        return redirect()->route('admin.admins.index')->with('success', 'تم حذف المستخدم بنجاح.');
     }
 
     public function toggleActive(Admin $admin): RedirectResponse
     {
         $this->adminUsers->toggleActive($admin);
 
-        return redirect()->route('admin.admins.index')->with('success', 'تم تحديث حالة الأدمن بنجاح.');
+        return redirect()->route('admin.admins.index')->with('success', 'تم تحديث حالة المستخدم بنجاح.');
     }
 }

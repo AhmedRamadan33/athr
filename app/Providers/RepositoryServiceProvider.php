@@ -9,9 +9,12 @@ use App\Repositories\Contracts\AttributeRepositoryInterface;
 use App\Repositories\Contracts\BrandRepositoryInterface;
 use App\Repositories\Contracts\CartRepositoryInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
+use App\Repositories\Contracts\ContactMessageRepositoryInterface;
 use App\Repositories\Contracts\CouponRepositoryInterface;
 use App\Repositories\Contracts\CustomerRepositoryInterface;
+use App\Repositories\Contracts\NewsletterSubscriberRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
+use App\Repositories\Contracts\PageContentRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Contracts\ProductVariantRepositoryInterface;
 use App\Repositories\Contracts\ReviewRepositoryInterface;
@@ -25,9 +28,12 @@ use App\Repositories\Eloquent\AttributeRepository;
 use App\Repositories\Eloquent\BrandRepository;
 use App\Repositories\Eloquent\CartRepository;
 use App\Repositories\Eloquent\CategoryRepository;
+use App\Repositories\Eloquent\ContactMessageRepository;
 use App\Repositories\Eloquent\CouponRepository;
 use App\Repositories\Eloquent\CustomerRepository;
+use App\Repositories\Eloquent\NewsletterSubscriberRepository;
 use App\Repositories\Eloquent\OrderRepository;
+use App\Repositories\Eloquent\PageContentRepository;
 use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\Eloquent\ProductVariantRepository;
 use App\Repositories\Eloquent\ReviewRepository;
@@ -59,5 +65,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CouponRepositoryInterface::class, CouponRepository::class);
         $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
         $this->app->bind(ReviewRepositoryInterface::class, ReviewRepository::class);
+
+        $this->app->bind(PageContentRepositoryInterface::class, PageContentRepository::class);
+        $this->app->bind(ContactMessageRepositoryInterface::class, ContactMessageRepository::class);
+        $this->app->bind(NewsletterSubscriberRepositoryInterface::class, NewsletterSubscriberRepository::class);
     }
 }

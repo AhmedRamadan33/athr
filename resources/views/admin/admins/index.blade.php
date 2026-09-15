@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('title', 'إدارة الأدمنز')
+@section('title', 'إدارة المستخدمين')
 
 @php
-    $pageTitle = 'إدارة الأدمنز';
+    $pageTitle = 'إدارة المستخدمين';
     $pageSubtitle = 'إدارة حسابات وصلاحيات فريق العمل';
 @endphp
 
@@ -34,12 +34,12 @@
 
             <a href="{{ route('admin.admins.create') }}"
                 class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-xl px-4 py-2 whitespace-nowrap">
-                + إضافة أدمن
+                + إضافة مستخدم
             </a>
         </div>
 
         @if ($admins->isEmpty())
-            @include('admin.partials.empty-state', ['message' => 'لا يوجد أدمنز مطابقين لبحثك'])
+            @include('admin.partials.empty-state', ['message' => 'لا يوجد مستخدمين مطابقين لبحثك'])
         @else
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">

@@ -73,7 +73,7 @@
             'icon' => 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
         ],
         [
-            'label' => 'الأدمنز',
+            'label' => 'المستخدمين',
             'route' => 'admin.admins.index',
             'active' => request()->routeIs('admin.admins.*'),
             'can' => $admin->can('admins.manage'),
@@ -85,6 +85,27 @@
             'active' => request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*'),
             'can' => $admin->can('roles.manage'),
             'icon' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+        ],
+        [
+            'label' => 'صفحات الموقع',
+            'route' => 'admin.page-contents.edit',
+            'active' => request()->routeIs('admin.page-contents.*'),
+            'can' => $admin->can('pages.manage'),
+            'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+        ],
+        [
+            'label' => 'رسائل التواصل',
+            'route' => 'admin.contact-messages.index',
+            'active' => request()->routeIs('admin.contact-messages.*'),
+            'can' => $admin->can('pages.manage'),
+            'icon' => 'M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z',
+        ],
+        [
+            'label' => 'مشتركو النشرة',
+            'route' => 'admin.newsletter-subscribers.index',
+            'active' => request()->routeIs('admin.newsletter-subscribers.*'),
+            'can' => $admin->can('pages.manage'),
+            'icon' => 'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75',
         ],
         [
             'label' => 'الإعدادات',
@@ -105,9 +126,9 @@
 
 <div id="sidebar-backdrop" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-30 lg:hidden"></div>
 
-<aside id="sidebar" class="fixed inset-y-0 right-0 z-40 w-64 shrink-0 flex flex-col bg-ink-900 text-zinc-300 translate-x-full lg:translate-x-0 lg:static transition-transform duration-200" style="background:#171310;">
+<aside id="sidebar" class="fixed inset-y-0 right-0 z-40 w-64 shrink-0 flex flex-col bg-ink-900 text-zinc-300 translate-x-full lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen transition-transform duration-200" style="background:#171310;">
     <div class="h-16 flex items-center gap-2 px-5 border-b border-white/10">
-        <div class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold">أ</div>
+        <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="w-10 h-10 object-contain">
         <div>
             <p class="text-white font-bold leading-none">أثر</p>
             <p class="text-[11px] text-zinc-400 mt-1">لوحة تحكم المتجر</p>
