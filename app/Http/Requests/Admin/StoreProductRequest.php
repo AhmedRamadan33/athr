@@ -21,7 +21,7 @@ class StoreProductRequest extends FormRequest
             'fragrance_notes' => ['nullable', 'string'],
             'is_active' => ['boolean'],
             'images' => ['nullable', 'array'],
-            'images.*' => ['image', 'max:2048'],
+            'images.*' => ['image', 'max:5120'],
         ];
     }
 }

@@ -20,7 +20,7 @@ class UpdateCategoryRequest extends FormRequest
                 'nullable', 'integer', 'exists:categories,id',
                 Rule::notIn([$this->route('category')->id]),
             ],
-            'image' => ['nullable', 'image', 'max:2048'],
+            'image' => ['nullable', 'image', 'max:5120'],
             'is_active' => ['boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
         ];

@@ -16,7 +16,7 @@ class UpdateBrandRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255', Rule::unique('brands', 'name')->ignore($this->route('brand'))],
-            'logo' => ['nullable', 'image', 'max:2048'],
+            'logo' => ['nullable', 'image', 'max:5120'],
             'is_active' => ['boolean'],
         ];
     }

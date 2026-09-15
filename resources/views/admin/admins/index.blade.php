@@ -10,7 +10,7 @@
 @section('content')
     <div class="bg-white rounded-2xl border border-zinc-200">
         <div class="p-4 sm:p-5 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <form method="GET" class="flex flex-1 flex-col sm:flex-row gap-3">
+            <form method="GET" class="flex flex-1 flex-col md:flex-row gap-3">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="ابحث بالاسم أو البريد الإلكتروني..."
                     class="flex-1 rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
 

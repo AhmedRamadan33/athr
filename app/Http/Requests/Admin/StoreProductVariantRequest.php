@@ -19,7 +19,7 @@ class StoreProductVariantRequest extends FormRequest
             'compare_price' => ['nullable', 'numeric', 'gt:price'],
             'stock_quantity' => ['required', 'integer', 'min:0'],
             'is_active' => ['boolean'],
-            'image' => ['nullable', 'image', 'max:2048'],
+            'image' => ['nullable', 'image', 'max:5120'],
             'attribute_value_ids' => ['required', 'array', 'min:1'],
             'attribute_value_ids.*' => ['integer', 'exists:attribute_values,id'],
         ];

@@ -60,13 +60,8 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                     @foreach ($categories as $category)
                         <a href="{{ route('storefront.category.show', $category) }}" class="bg-white border border-zinc-200 p-4 text-center hover:border-brand-400 transition">
-                            @if ($category->image)
-                                <img src="{{ Storage::url($category->image) }}" alt="{{ $category->name }}" class="w-14 h-14 mx-auto rounded-full object-cover mb-2">
-                            @else
-                                <div class="w-14 h-14 mx-auto rounded-full bg-brand-50 text-brand-600 flex items-center justify-center mb-2 font-bold">
-                                    {{ mb_substr($category->name, 0, 1) }}
-                                </div>
-                            @endif
+                            <img src="{{ $category->image ? Storage::url($category->image) : asset('img/category-placeholder-geometric.png') }}"
+                                alt="{{ $category->name }}" class="mx-auto rounded-full object-cover mb-2">
                             <p class="text-sm font-medium text-ink-900">{{ $category->name }}</p>
                         </a>
                     @endforeach

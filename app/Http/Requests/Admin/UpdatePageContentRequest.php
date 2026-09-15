@@ -19,7 +19,7 @@ class UpdatePageContentRequest extends FormRequest
 
         foreach ($fields as $key => $config) {
             $rules["values.{$key}"] = $config['type'] === 'image'
-                ? ['nullable', 'image', 'max:2048']
+                ? ['nullable', 'image', 'max:5120']
                 : ['nullable', 'string', 'max:5000'];
         }
 

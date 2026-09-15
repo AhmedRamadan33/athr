@@ -8,6 +8,29 @@
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
 </head>
 <body class="min-h-screen bg-zinc-50 text-ink-900 antialiased">
+    <div id="page-loader">
+        <img src="{{ asset('img/codeverse-logo.png') }}" alt="Codeverse">
+        <div class="loader-dots"><span></span><span></span><span></span></div>
+    </div>
+    <script>
+        (function () {
+            var loader = document.getElementById('page-loader');
+            var shownAt = Date.now();
+            var hide = function () {
+                var wait = Math.max(400 - (Date.now() - shownAt), 0);
+                setTimeout(function () {
+                    loader.classList.add('is-hidden');
+                    setTimeout(function () { loader.remove(); }, 400);
+                }, wait);
+            };
+            if (document.readyState === 'complete') {
+                hide();
+            } else {
+                window.addEventListener('load', hide);
+            }
+        })();
+    </script>
+
     <div id="flash-data" data-success="{{ session('success') }}" data-error="{{ session('error') }}" class="hidden"></div>
 
     <div class="flex min-h-screen">

@@ -10,13 +10,13 @@
 @section('content')
     <div class="bg-white rounded-2xl border border-zinc-200">
         <div class="p-4 sm:p-5 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center gap-3">
-            <form method="GET" class="flex flex-1 gap-3">
+            <form method="GET" class="flex flex-col sm:flex-row flex-1 gap-3">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="ابحث بالبريد الإلكتروني..."
                     class="flex-1 rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
                 <button type="submit" class="bg-zinc-800 hover:bg-zinc-900 text-white text-sm font-medium rounded-xl px-4 py-2">بحث</button>
             </form>
 
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
                 <a href="{{ route('admin.newsletter-subscribers.export', request()->only('search')) }}"
                     class="inline-flex items-center justify-center gap-2 border border-zinc-300 hover:bg-zinc-50 text-ink-900 text-sm font-semibold rounded-xl px-4 py-2 whitespace-nowrap">
                     تصدير CSV

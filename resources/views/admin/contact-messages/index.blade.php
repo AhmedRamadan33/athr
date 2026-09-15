@@ -25,17 +25,17 @@
         @else
             <div class="divide-y divide-zinc-100">
                 @foreach ($messages as $message)
-                    <div class="p-4 flex items-start justify-between gap-4">
-                        <div>
-                            <div class="flex items-center gap-2">
+                    <div class="p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                        <div class="min-w-0">
+                            <div class="flex flex-wrap items-center gap-2">
                                 <p class="font-medium text-ink-900">{{ $message->name }}</p>
-                                <span class="text-xs text-zinc-400">{{ $message->email }}</span>
+                                <span class="text-xs text-zinc-400 break-all">{{ $message->email }}</span>
                             </div>
-                            <p class="text-sm text-zinc-600 mt-2">{{ $message->message }}</p>
+                            <p class="text-sm text-zinc-600 mt-2 break-words">{{ $message->message }}</p>
                             <p class="text-xs text-zinc-400 mt-2">{{ $message->created_at->format('Y-m-d H:i') }}</p>
                         </div>
 
-                        <div class="flex items-center gap-3 shrink-0">
+                        <div class="flex flex-wrap items-center gap-3 shrink-0">
                             <span class="text-xs rounded-full px-2.5 py-1 {{ $message->is_read ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700' }}">
                                 {{ $message->is_read ? 'مقروءة' : 'غير مقروءة' }}
                             </span>
