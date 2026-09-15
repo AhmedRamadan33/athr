@@ -72,4 +72,50 @@ class CartTest extends TestCase
 
         $response->assertSessionHasErrors('quantity');
     }
+
+    public function test_customer_cannot_update_another_customers_cart_item(): void
+    {
+        $owner = Customer::factory()->create();
+        $attacker = Customer::factory()->create();
+        $variant = ProductVariant::factory()->create(['stock_quantity' => 10]);
+
+        $this->actingAs($owner, 'customer')->post(route('storefront.cart.store'), ['product_variant_id' => $variant->id, 'quantity' => 1]);
+        $item = CartItem::first();
+
+        $response = $this->actingAs($attacker, 'customer')->put(route('storefront.cart.update', $item), ['quantity' => 99]);
+
+        $response->assertForbidden();
+        $this->assertSame(1, $item->fresh()->quantity);
+    }
+
+    public function test_customer_cannot_delete_another_customers_cart_item(): void
+    {
+        $owner = Customer::factory()->create();
+        $attacker = Customer::factory()->create();
+        $variant = ProductVariant::factory()->create(['stock_quantity' => 10]);
+
+        $this->actingAs($owner, 'customer')->post(route('storefront.cart.store'), ['product_variant_id' => $variant->id, 'quantity' => 1]);
+        $item = CartItem::first();
+
+        $response = $this->actingAs($attacker, 'customer')->delete(route('storefront.cart.destroy', $item));
+
+        $response->assertForbidden();
+        $this->assertDatabaseCount('cart_items', 1);
+    }
+
+    public function test_guest_cannot_manipulate_another_guest_sessions_cart_item(): void
+    {
+        $variant = ProductVariant::factory()->create(['stock_quantity' => 10]);
+        $item = CartItem::create([
+            'cart_id' => \App\Models\Cart::create(['session_id' => 'some-other-guest-session'])->id,
+            'product_variant_id' => $variant->id,
+            'quantity' => 1,
+            'price' => $variant->price,
+        ]);
+
+        $response = $this->put(route('storefront.cart.update', $item), ['quantity' => 99]);
+
+        $response->assertForbidden();
+        $this->assertSame(1, $item->fresh()->quantity);
+    }
 }

@@ -1,6 +1,8 @@
 @extends('storefront.layouts.app')
 
 @section('title', $product->name)
+@section('meta_description', $product->description ? \Illuminate\Support\Str::limit($product->description, 160) : 'اكتشف '.$product->name.' من أثر — عطور وبرفانات فاخرة أصيلة.')
+@section('meta_image', $product->images->first() ? Storage::url($product->images->first()->path) : asset('img/product.png'))
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">

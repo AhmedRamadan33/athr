@@ -41,8 +41,10 @@ class CartController extends Controller
         return back()->with('success', 'تم تحديث الكمية بنجاح.');
     }
 
-    public function destroy(CartItem $item): RedirectResponse
+    public function destroy(Request $request, CartItem $item): RedirectResponse
     {
+        $this->authorizeCartItemOwnership($request, $item);
+
         $this->cartService->removeItem($item);
 
         return back()->with('success', 'تم حذف المنتج من السلة.');
@@ -51,5 +53,16 @@ class CartController extends Controller
     protected function resolveCart(Request $request)
     {
         return $this->cartService->currentCart(Auth::guard('customer')->id(), $request->session()->getId());
+    }
+
+    protected function authorizeCartItemOwnership(Request $request, CartItem $item): void
+    {
+        $cart = $item->cart;
+
+        $owned = Auth::guard('customer')->check()
+            ? $cart->customer_id === Auth::guard('customer')->id()
+            : $cart->session_id === $request->session()->getId();
+
+        abort_unless($owned, 403);
     }
 }

@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'أثر') - متجر العطور</title>
+
+    @php
+        $defaultMetaDescription = 'أثر — عطور وبرفانات فاخرة أصيلة. تسوّق أفضل العطور الرجالية والنسائية بجودة عالية وتوصيل سريع فى مصر.';
+    @endphp
+    <meta name="description" content="@yield('meta_description', $defaultMetaDescription)">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="أثر">
+    <meta property="og:title" content="@yield('title', 'أثر') - متجر العطور">
+    <meta property="og:description" content="@yield('meta_description', $defaultMetaDescription)">
+    <meta property="og:image" content="@yield('meta_image', asset('img/athar_hero.jpg'))">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta name="twitter:card" content="summary_large_image">
+
     @vite(['resources/css/storefront.css', 'resources/js/storefront.js'])
 </head>
 <body>
