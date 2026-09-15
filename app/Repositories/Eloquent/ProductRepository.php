@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,7 +26,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 });
             })
             ->when($filters['category_id'] ?? null, function (Builder $q, string $categoryId) {
-                $q->where('category_id', $categoryId);
+                $categoryIds = Category::where('id', $categoryId)
+                    ->orWhere('parent_id', $categoryId)
+                    ->pluck('id');
+
+                $q->whereIn('category_id', $categoryIds);
             })
             ->when($filters['brand_id'] ?? null, function (Builder $q, string $brandId) {
                 $q->where('brand_id', $brandId);

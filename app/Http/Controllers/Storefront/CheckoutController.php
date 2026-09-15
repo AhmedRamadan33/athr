@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Storefront;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\StoreCheckoutRequest;
 use App\Models\Address;
+use App\Services\Admin\SettingService;
 use App\Services\OrderService;
 use App\Services\Payment\PaymobService;
 use App\Services\Storefront\CartService;
@@ -19,6 +20,7 @@ class CheckoutController extends Controller
         protected CartService $cartService,
         protected OrderService $orderService,
         protected PaymobService $paymobService,
+        protected SettingService $settings,
     ) {}
 
     public function create(Request $request): View|RedirectResponse
@@ -33,6 +35,7 @@ class CheckoutController extends Controller
         return view('storefront.checkout.index', [
             'cart' => $cart,
             'addresses' => $customer->addresses,
+            'freeShippingThreshold' => $this->settings->freeShippingThreshold(),
         ]);
     }
 

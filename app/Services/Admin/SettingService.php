@@ -10,7 +10,10 @@ class SettingService
     const GROUPS = [
         'general' => [
             'label' => 'الإعدادات العامة',
-            'fields' => ['site_name', 'site_phone', 'site_address'],
+            'fields' => [
+                'site_name', 'site_phone', 'site_address', 'free_shipping_threshold',
+                'facebook_url', 'twitter_url', 'instagram_url', 'tiktok_url',
+            ],
             'encrypted' => [],
         ],
         'mail' => [
@@ -52,5 +55,24 @@ class SettingService
         $value = $this->getGroup('inventory')->get('low_stock_threshold');
 
         return $value !== null && $value !== '' ? (int) $value : 5;
+    }
+
+    public function freeShippingThreshold(): ?float
+    {
+        $value = $this->getGroup('general')->get('free_shipping_threshold');
+
+        return $value !== null && $value !== '' ? (float) $value : null;
+    }
+
+    public function socialLinks(): array
+    {
+        $general = $this->getGroup('general');
+
+        return collect([
+            'facebook' => $general->get('facebook_url'),
+            'twitter' => $general->get('twitter_url'),
+            'instagram' => $general->get('instagram_url'),
+            'tiktok' => $general->get('tiktok_url'),
+        ])->filter(fn (?string $url) => filled($url))->all();
     }
 }

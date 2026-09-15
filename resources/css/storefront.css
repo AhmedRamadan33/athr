@@ -36,10 +36,18 @@ input[type="number"],
 input[type="date"],
 input[type="tel"],
 input[type="search"],
+input[type="url"],
 input[type="file"],
 textarea {
     padding: 0.625rem 0.875rem;
     min-height: 42px;
+}
+
+input[type="url"],
+input[type="email"],
+input[type="tel"] {
+    direction: ltr;
+    text-align: right;
 }
 
 .select2-container--default .select2-selection--single,
@@ -172,6 +180,12 @@ nav[role="navigation"] svg {
 .story-copy { max-width: 460px; }
 .story-copy h2 { font-size: clamp(38px, 5vw, 58px); margin-bottom: 23px; }
 .story-copy p { color: #837366; font-size: 13px; line-height: 2.1; margin: 0 0 14px; }
+.story-closing { max-width: 720px; margin: 0 auto 60px; text-align: center; color: #5c4c3f; font-size: 16px; line-height: 2; font-family: 'Playfair Display', 'Cairo', serif; font-style: italic; }
+.story-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.story-value { text-align: center; padding: 0 10px; }
+.story-value-number { font-family: 'Playfair Display', serif; font-size: 34px; color: #d7ad73; display: block; margin-bottom: 10px; }
+.story-value h3 { font-family: 'Playfair Display', 'Cairo', serif; font-size: 19px; color: #3a281f; margin: 0 0 10px; font-weight: 600; }
+.story-value p { color: #8a7a6d; font-size: 12px; line-height: 1.9; margin: 0; }
 .ritual-section { background: #3b2920; color: #fff7ec; min-height: 380px; position: relative; overflow: hidden; }
 .ritual-section:before { content: ''; position: absolute; width: 450px; height: 450px; border: 1px solid rgba(208,170,112,.16); border-radius: 50%; top: -220px; left: 12%; }
 .ritual-section:after { content: ''; position: absolute; width: 600px; height: 600px; border: 1px solid rgba(208,170,112,.1); border-radius: 50%; top: -280px; left: 7%; }
@@ -181,6 +195,13 @@ nav[role="navigation"] svg {
 .ritual-stat { display: flex; align-items: end; gap: 15px; color: #d7ad73; }
 .ritual-stat strong { font-family: 'Playfair Display', serif; font-size: 110px; font-weight: 500; line-height: .7; letter-spacing: -.06em; }
 .ritual-stat span { color: #b99b7b; font-size: 12px; line-height: 1.6; margin-bottom: 3px; }
+.ritual-steps { padding: 100px 0; background: #f7f4ef; }
+.ritual-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 10px; }
+.ritual-step { text-align: center; padding: 0 10px; }
+.ritual-step-number { font-family: 'Playfair Display', serif; font-size: 34px; color: #d7ad73; display: block; margin-bottom: 10px; }
+.ritual-step h3 { font-family: 'Playfair Display', 'Cairo', serif; font-size: 19px; color: #3a281f; margin: 0 0 10px; font-weight: 600; }
+.ritual-step p { color: #8a7a6d; font-size: 12px; line-height: 1.9; margin: 0; }
+.ritual-cta { text-align: center; padding: 0 0 100px; background: #f7f4ef; }
 .contact-hero { padding: 90px 0 50px; background: #f7f4ef; text-align: center; }
 .contact-hero .eyebrow { justify-content: center; }
 .contact-hero p { max-width: 480px; margin: 20px auto 0; color: #8a7a6d; font-size: 13px; line-height: 1.9; }
@@ -221,7 +242,7 @@ nav[role="navigation"] svg {
 .footer-social { display: flex; flex-direction: column; gap: 15px; align-items: flex-start; }
 .footer-social .icons { display: flex; gap: 8px; direction: ltr; }
 .footer-social a { width: 31px; height: 31px; border: 1px solid #72533d; color: #d4b694; border-radius: 50%; font-family: 'Playfair Display', serif; font-size: 12px; display: grid; place-items: center; }
-.footer-bottom { border-top: 1px solid #574034; padding-top: 17px; color: #887263; font-size: 9px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer-bottom { border-top: 1px solid #574034; padding-top: 17px; color: #887263; font-size: 9px; display: flex; justify-content: center; text-align: center; flex-wrap: wrap; gap: 8px; }
 .drawer-layer { position: fixed; inset: 0; z-index: 80; background: rgba(40,25,17,.55); backdrop-filter: blur(3px); }
 .cart-drawer { background: #fbf8f3; width: min(420px, 100%); height: 100%; position: absolute; left: 0; top: 0; padding: 34px 28px; display: flex; flex-direction: column; box-shadow: 12px 0 45px rgba(27,16,10,.15); }
 .drawer-head { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 25px; border-bottom: 1px solid #e6ddd1; }
@@ -291,7 +312,9 @@ nav[role="navigation"] svg {
     .story-grid { display: flex; flex-direction: column; gap: 42px; align-items: stretch; }
     .story-image-wrap { height: 340px; }
     .story-copy h2 { font-size: 42px; }
+    .story-values { grid-template-columns: 1fr; gap: 30px; }
     .ritual-copy h2 { font-size: 42px; }
+    .ritual-steps-grid { grid-template-columns: 1fr; gap: 30px; }
     .ritual-stat strong { font-size: 80px; }
     .newsletter-inner { display: block; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 42px 22px; }

@@ -35,12 +35,18 @@
             ['label' => 'طقوس العطر', 'route' => 'storefront.ritual', 'active' => request()->routeIs('storefront.ritual')],
             ['label' => 'تواصل معنا', 'route' => 'storefront.contact', 'active' => request()->routeIs('storefront.contact')],
         ];
+
+        $settingService = app(\App\Services\Admin\SettingService::class);
+        $freeShippingThreshold = $settingService->freeShippingThreshold();
+        $socialLinks = $settingService->socialLinks();
     @endphp
 
     <div class="store-shell">
         <div class="announcement-bar">
-            <span>شحن مجانى للطلبات فوق 500 ج.م</span>
-            <span class="announcement-divider"></span>
+            @if ($freeShippingThreshold !== null)
+                <span>شحن مجانى للطلبات فوق {{ number_format($freeShippingThreshold, 0) }} ج.م</span>
+                <span class="announcement-divider"></span>
+            @endif
             <span>هدية عطرية مع كل طلب هذا الشهر</span>
         </div>
 
@@ -128,17 +134,17 @@
                         <a href="{{ route('storefront.cart.index') }}">سلة المشتريات</a>
                     </div>
                 </div>
-                <div class="footer-social">
-                    <span>تابع أثر</span>
-                    <div class="icons">
-                        <a href="#" aria-label="انستغرام">ig</a>
-                        <a href="#" aria-label="تيك توك">tk</a>
+                @if (!empty($socialLinks))
+                    <div class="footer-social">
+                        <span>تابع أثر</span>
+                        <div class="icons">
+                            @include('storefront.partials.social-links')
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
             <div class="container-xxl footer-bottom">
                 <span>© {{ date('Y') }} أثر. جميع الحقوق محفوظة.</span>
-                <span>صُنع بحب فى القاهرة</span>
             </div>
         </footer>
     </div>

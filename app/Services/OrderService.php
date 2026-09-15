@@ -77,7 +77,10 @@ class OrderService
             $discount = $coupon->discountFor($subtotal);
         }
 
-        $shippingCost = (float) $shippingZone->cost;
+        $freeShippingThreshold = $this->settings->freeShippingThreshold();
+        $shippingCost = $freeShippingThreshold !== null && $subtotal >= $freeShippingThreshold
+            ? 0.0
+            : (float) $shippingZone->cost;
         $total = $subtotal - $discount + $shippingCost;
 
         return DB::transaction(function () use ($customer, $cart, $address, $paymentMethod, $notes, $coupon, $subtotal, $discount, $shippingCost, $total) {

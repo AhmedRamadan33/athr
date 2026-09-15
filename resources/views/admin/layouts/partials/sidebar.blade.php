@@ -127,12 +127,8 @@
 <div id="sidebar-backdrop" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-30 lg:hidden"></div>
 
 <aside id="sidebar" class="fixed inset-y-0 right-0 z-40 w-64 shrink-0 flex flex-col bg-ink-900 text-zinc-300 translate-x-full lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen transition-transform duration-200" style="background:#171310;">
-    <div class="h-16 flex items-center gap-2 px-5 border-b border-white/10">
-        <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="w-10 h-10 object-contain">
-        <div>
-            <p class="text-white font-bold leading-none">أثر</p>
-            <p class="text-[11px] text-zinc-400 mt-1">لوحة تحكم المتجر</p>
-        </div>
+    <div class="h-16 px-5 border-b border-white/10">
+        <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="h-16 object-contain">
     </div>
 
     <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">

@@ -75,7 +75,15 @@
                     <span>الإجمالى قبل الشحن</span>
                     <span>{{ number_format($cart->total(), 2) }} ج.م</span>
                 </div>
-                <p class="text-xs text-zinc-400 mt-1">تُحسب تكلفة الشحن حسب المحافظة عند تأكيد الطلب</p>
+                @if ($freeShippingThreshold !== null && (float) $cart->total() >= $freeShippingThreshold)
+                    <p class="text-xs text-emerald-600 font-medium mt-1">مبروك! طلبك مؤهل للشحن المجانى</p>
+                @elseif ($freeShippingThreshold !== null)
+                    <p class="text-xs text-zinc-400 mt-1">
+                        أضف {{ number_format($freeShippingThreshold - (float) $cart->total(), 2) }} ج.م أخرى لتحصل على شحن مجانى
+                    </p>
+                @else
+                    <p class="text-xs text-zinc-400 mt-1">تُحسب تكلفة الشحن حسب المحافظة عند تأكيد الطلب</p>
+                @endif
             </div>
         </div>
     </div>

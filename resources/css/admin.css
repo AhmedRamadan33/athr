@@ -35,10 +35,18 @@ input[type="number"],
 input[type="date"],
 input[type="tel"],
 input[type="search"],
+input[type="url"],
 input[type="file"],
 textarea {
     padding: 0.625rem 0.875rem;
     min-height: 42px;
+}
+
+input[type="url"],
+input[type="email"],
+input[type="tel"] {
+    direction: ltr;
+    text-align: right;
 }
 
 .select2-container--default .select2-selection--single,

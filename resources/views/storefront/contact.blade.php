@@ -34,14 +34,9 @@
                     </div>
                 @endif
 
-                @if ($content['instagram'] || $content['tiktok'])
+                @if (!empty($socialLinks))
                     <div class="contact-social">
-                        @if ($content['instagram'])
-                            <a href="{{ $content['instagram'] }}" target="_blank" rel="noopener" aria-label="انستغرام">ig</a>
-                        @endif
-                        @if ($content['tiktok'])
-                            <a href="{{ $content['tiktok'] }}" target="_blank" rel="noopener" aria-label="تيك توك">tk</a>
-                        @endif
+                        @include('storefront.partials.social-links')
                     </div>
                 @endif
             </div>

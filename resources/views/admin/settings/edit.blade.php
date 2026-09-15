@@ -8,6 +8,11 @@
         'site_name' => 'اسم المتجر',
         'site_phone' => 'رقم الهاتف',
         'site_address' => 'العنوان',
+        'free_shipping_threshold' => 'الحد الأدنى للشحن المجانى (ج.م) — اتركه فارغًا لتعطيل الشحن المجانى',
+        'facebook_url' => 'رابط فيسبوك',
+        'twitter_url' => 'رابط تويتر (X)',
+        'instagram_url' => 'رابط انستغرام',
+        'tiktok_url' => 'رابط تيك توك',
         'mailer' => 'وسيلة الإرسال',
         'host' => 'SMTP Host',
         'port' => 'SMTP Port',
@@ -30,6 +35,9 @@
         'encryption' => ['tls' => 'TLS', 'ssl' => 'SSL', '' => 'بدون تشفير'],
         'mode' => ['test' => 'تجريبى (Test)', 'live' => 'فعلى (Live)'],
     ];
+
+    $numberFields = ['low_stock_threshold', 'free_shipping_threshold'];
+    $urlFields = ['facebook_url', 'twitter_url', 'instagram_url', 'tiktok_url'];
 
     $encrypted = $groups[$group]['encrypted'] ?? [];
 @endphp
@@ -68,9 +76,10 @@
                             @endforeach
                         </select>
                     @else
-                        <input type="{{ in_array($field, $encrypted) ? 'password' : 'text' }}"
+                        <input type="{{ in_array($field, $encrypted) ? 'password' : (in_array($field, $numberFields) ? 'number' : (in_array($field, $urlFields) ? 'url' : 'text')) }}"
                             name="values[{{ $field }}]"
                             value="{{ old('values.'.$field, $values[$field] ?? '') }}"
+                            @if (in_array($field, $urlFields)) placeholder="https://" @endif
                             class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
                     @endif
 
