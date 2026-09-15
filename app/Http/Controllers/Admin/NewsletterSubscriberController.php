@@ -34,10 +34,17 @@ class NewsletterSubscriberController extends Controller
 
         return Response::streamDownload(function () use ($rows) {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['البريد الإلكتروني', 'الحالة', 'تاريخ الاشتراك']);
+            fwrite($handle, "\xFF\xFE");
+
+            $writeRow = function (array $values) use ($handle) {
+                $line = implode("\t", $values)."\r\n";
+                fwrite($handle, mb_convert_encoding($line, 'UTF-16LE', 'UTF-8'));
+            };
+
+            $writeRow(['البريد الإلكتروني', 'الحالة', 'تاريخ الاشتراك']);
 
             foreach ($rows as $row) {
-                fputcsv($handle, [
+                $writeRow([
                     $row->email,
                     $row->unsubscribed_at ? 'ملغى الاشتراك' : 'مشترك',
                     $row->created_at->format('Y-m-d H:i'),

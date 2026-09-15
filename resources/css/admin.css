@@ -42,6 +42,10 @@ textarea {
     min-height: 42px;
 }
 
+input[type="password"].has-toggle {
+    padding-left: 2.5rem;
+}
+
 input[type="url"],
 input[type="email"],
 input[type="tel"] {

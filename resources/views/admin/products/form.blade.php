@@ -59,22 +59,6 @@
                 @error('images.*') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
 
-            @if ($isEdit && $product->images->isNotEmpty())
-                <div class="flex flex-wrap gap-3">
-                    @foreach ($product->images as $image)
-                        <div class="relative">
-                            <img src="{{ Storage::url($image->path) }}" class="w-20 h-20 rounded-xl object-cover" alt="">
-                            <form method="POST" action="{{ route('admin.products.images.destroy', [$product, $image]) }}" onsubmit="return confirmDelete(this)"
-                                class="absolute -top-2 -left-2">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="w-6 h-6 rounded-full bg-red-500 text-white text-xs">×</button>
-                            </form>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-
             <label class="flex items-center gap-2 text-sm text-zinc-700">
                 <input type="hidden" name="is_active" value="0">
                 <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $product->is_active ?? true))
@@ -88,6 +72,25 @@
             </div>
         </form>
     </div>
+
+    @if ($isEdit && $product->images->isNotEmpty())
+        <div class="bg-white rounded-2xl border border-zinc-200 p-5 sm:p-6 max-w-3xl mt-6">
+            <p class="font-semibold text-ink-900 mb-4">صور المنتج الحالية</p>
+            <div class="flex flex-wrap gap-3">
+                @foreach ($product->images as $image)
+                    <div class="relative">
+                        <img src="{{ Storage::url($image->path) }}" class="w-20 h-20 rounded-xl object-cover" alt="">
+                        <form method="POST" action="{{ route('admin.products.images.destroy', [$product, $image]) }}" onsubmit="return confirmDelete(this)"
+                            class="absolute -top-2 -left-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="w-6 h-6 rounded-full bg-red-500 text-white text-xs">×</button>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
 
     @if ($isEdit)
         <div class="bg-white rounded-2xl border border-zinc-200 p-5 sm:p-6 max-w-3xl mt-6">

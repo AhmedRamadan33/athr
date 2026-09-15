@@ -20,11 +20,7 @@
                     <input type="email" name="email" value="{{ old('email') }}" required autofocus
                         class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-zinc-700 mb-1">كلمة المرور</label>
-                    <input type="password" name="password" required
-                        class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                </div>
+                @include('partials.password-input', ['name' => 'password', 'label' => 'كلمة المرور', 'required' => true])
                 <div class="flex items-center justify-between text-sm">
                     <label class="flex items-center gap-2 text-zinc-600">
                         <input type="checkbox" name="remember" class="rounded border-zinc-300 text-brand-600 focus:ring-brand-500">

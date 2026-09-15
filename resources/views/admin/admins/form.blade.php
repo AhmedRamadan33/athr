@@ -28,20 +28,16 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-zinc-700 mb-1">
-                        كلمة المرور @if ($isEdit) <span class="text-zinc-400 font-normal">(اتركها فارغة للإبقاء عليها)</span> @endif
-                    </label>
-                    <input type="password" name="password" {{ $isEdit ? '' : 'required' }}
-                        class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                    @error('password') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-zinc-700 mb-1">تأكيد كلمة المرور</label>
-                    <input type="password" name="password_confirmation" {{ $isEdit ? '' : 'required' }}
-                        class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                </div>
+                @include('partials.password-input', [
+                    'name' => 'password',
+                    'label' => 'كلمة المرور'.($isEdit ? ' (اتركها فارغة للإبقاء عليها)' : ''),
+                    'required' => ! $isEdit,
+                ])
+                @include('partials.password-input', [
+                    'name' => 'password_confirmation',
+                    'label' => 'تأكيد كلمة المرور',
+                    'required' => ! $isEdit,
+                ])
             </div>
 
             <div>

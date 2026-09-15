@@ -35,16 +35,8 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-zinc-700 mb-1">كلمة مرور جديدة (اختيارى)</label>
-                            <input type="password" name="password"
-                                class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-zinc-700 mb-1">تأكيد كلمة المرور</label>
-                            <input type="password" name="password_confirmation"
-                                class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                        </div>
+                        @include('partials.password-input', ['name' => 'password', 'label' => 'كلمة مرور جديدة (اختيارى)'])
+                        @include('partials.password-input', ['name' => 'password_confirmation', 'label' => 'تأكيد كلمة المرور'])
                     </div>
 
                     <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-xl px-5 py-2.5">

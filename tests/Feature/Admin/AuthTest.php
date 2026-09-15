@@ -64,4 +64,16 @@ class AuthTest extends TestCase
 
         $response->assertRedirect(route('admin.dashboard'));
     }
+
+    public function test_admin_logout_does_not_wipe_out_unrelated_session_data(): void
+    {
+        $admin = Admin::factory()->create();
+
+        $this->actingAs($admin, 'admin')
+            ->withSession(['customer_side_marker' => 'still-here'])
+            ->post(route('admin.logout'));
+
+        $this->assertGuest('admin');
+        $this->assertSame('still-here', session('customer_side_marker'));
+    }
 }

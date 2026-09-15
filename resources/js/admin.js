@@ -25,6 +25,15 @@ window.toggleSidebar = () => {
     document.getElementById('sidebar-backdrop')?.classList.toggle('hidden');
 };
 
+window.togglePasswordVisibility = (button) => {
+    const input = button.previousElementSibling;
+    const isHidden = input.type === 'password';
+
+    input.type = isHidden ? 'text' : 'password';
+    button.querySelector('.pw-eye-open')?.classList.toggle('hidden', isHidden);
+    button.querySelector('.pw-eye-closed')?.classList.toggle('hidden', !isHidden);
+};
+
 window.switchTab = (containerId, key) => {
     document.querySelectorAll(`#${containerId} [data-tab-panel]`).forEach((panel) => {
         panel.classList.toggle('hidden', panel.dataset.tabPanel !== key);

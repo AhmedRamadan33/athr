@@ -14,4 +14,11 @@
             {{ $link['label'] }}
         </a>
     @endforeach
+
+    <form method="POST" action="{{ route('storefront.logout') }}" class="pt-1 mt-1 border-t border-zinc-100">
+        @csrf
+        <button type="submit" class="w-full text-right rounded-xl px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">
+            تسجيل الخروج
+        </button>
+    </form>
 </nav>

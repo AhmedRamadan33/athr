@@ -22,16 +22,8 @@
                     <input type="email" name="email" value="{{ old('email', $email) }}" required autofocus
                         class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-zinc-700 mb-1">كلمة المرور الجديدة</label>
-                    <input type="password" name="password" required
-                        class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-zinc-700 mb-1">تأكيد كلمة المرور</label>
-                    <input type="password" name="password_confirmation" required
-                        class="w-full rounded-xl border border-zinc-300 text-sm focus:border-brand-500 focus:ring-brand-500">
-                </div>
+                @include('partials.password-input', ['name' => 'password', 'label' => 'كلمة المرور الجديدة', 'required' => true])
+                @include('partials.password-input', ['name' => 'password_confirmation', 'label' => 'تأكيد كلمة المرور', 'required' => true])
                 <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl py-2.5">
                     إعادة تعيين كلمة المرور
                 </button>

@@ -5,7 +5,9 @@
 @section('content')
     <div class="bg-white rounded-2xl shadow-2xl shadow-black/40 p-8">
         <div class="text-center mb-8">
-            <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="mx-auto w-16 h-16 object-contain">
+            <a href="{{ route('storefront.home') }}">
+                <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="mx-auto w-16 h-16 object-contain">
+            </a>
             <h1 class="mt-4 text-xl font-bold text-ink-900">نسيت كلمة المرور؟</h1>
             <p class="text-sm text-zinc-500 mt-1">أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين</p>
         </div>

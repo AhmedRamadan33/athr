@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Activitylog\Facades\CauserResolver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,5 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        CauserResolver::resolveUsing(fn () => Auth::guard('admin')->user() ?? Auth::guard('customer')->user());
     }
 }

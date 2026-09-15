@@ -28,15 +28,19 @@ class LoginController extends Controller
 
         $this->cartService->mergeGuestIntoCustomer($sessionId, Auth::guard('customer')->id());
 
-        return redirect()->intended(route('storefront.home'))->with('success', 'تم تسجيل الدخول بنجاح.');
+        $intended = $request->session()->pull('url.intended');
+        $redirectTo = $intended && ! str_starts_with(parse_url($intended, PHP_URL_PATH) ?? '', '/admin')
+            ? $intended
+            : route('storefront.home');
+
+        return redirect()->to($redirectTo)->with('success', 'تم تسجيل الدخول بنجاح.');
     }
 
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('customer')->logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->regenerate();
 
         return redirect()->route('storefront.home');
     }

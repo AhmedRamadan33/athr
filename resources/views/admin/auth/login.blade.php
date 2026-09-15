@@ -5,7 +5,9 @@
 @section('content')
     <div class="bg-white rounded-2xl shadow-2xl shadow-black/40 p-8">
         <div class="text-center mb-8">
-            <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="mx-auto w-16 h-16 object-contain">
+            <a href="{{ route('storefront.home') }}">
+                <img src="{{ asset('img/athar_logo.png') }}" alt="أثر" class="mx-auto w-16 h-16 object-contain">
+            </a>
             <h1 class="mt-4 text-xl font-bold text-ink-900">لوحة تحكم أثر</h1>
             <p class="text-sm text-zinc-500 mt-1">سجّل الدخول لإدارة المتجر</p>
         </div>
@@ -25,11 +27,7 @@
                     class="w-full rounded-xl border border-zinc-300 focus:border-brand-500 focus:ring-brand-500 text-sm">
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-zinc-700 mb-1">كلمة المرور</label>
-                <input type="password" name="password" required
-                    class="w-full rounded-xl border border-zinc-300 focus:border-brand-500 focus:ring-brand-500 text-sm">
-            </div>
+            @include('partials.password-input', ['name' => 'password', 'label' => 'كلمة المرور', 'required' => true])
 
             <div class="flex items-center justify-between text-sm">
                 <label class="flex items-center gap-2 text-zinc-600">

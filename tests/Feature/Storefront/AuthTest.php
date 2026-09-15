@@ -64,4 +64,55 @@ class AuthTest extends TestCase
 
         $response->assertRedirect(route('storefront.login'));
     }
+
+    public function test_login_ignores_a_leftover_intended_url_pointing_to_the_admin_panel(): void
+    {
+        $customer = Customer::factory()->create(['password' => bcrypt('secret123')]);
+
+        $response = $this->withSession(['url.intended' => url('/admin/products')])
+            ->post(route('storefront.login.store'), [
+                'email' => $customer->email,
+                'password' => 'secret123',
+            ]);
+
+        $response->assertRedirect(route('storefront.home'));
+    }
+
+    public function test_login_still_honors_a_legitimate_storefront_intended_url(): void
+    {
+        $customer = Customer::factory()->create(['password' => bcrypt('secret123')]);
+
+        $response = $this->withSession(['url.intended' => route('storefront.cart.index')])
+            ->post(route('storefront.login.store'), [
+                'email' => $customer->email,
+                'password' => 'secret123',
+            ]);
+
+        $response->assertRedirect(route('storefront.cart.index'));
+    }
+
+    public function test_customer_can_logout_from_account_page(): void
+    {
+        $customer = Customer::factory()->create();
+
+        $response = $this->actingAs($customer, 'customer')->get(route('storefront.account.edit'));
+        $response->assertSee(route('storefront.logout'));
+
+        $logout = $this->actingAs($customer, 'customer')->post(route('storefront.logout'));
+
+        $logout->assertRedirect();
+        $this->assertGuest('customer');
+    }
+
+    public function test_customer_logout_does_not_wipe_out_unrelated_session_data(): void
+    {
+        $customer = Customer::factory()->create();
+
+        $this->actingAs($customer, 'customer')
+            ->withSession(['admin_side_marker' => 'still-here'])
+            ->post(route('storefront.logout'));
+
+        $this->assertGuest('customer');
+        $this->assertSame('still-here', session('admin_side_marker'));
+    }
 }

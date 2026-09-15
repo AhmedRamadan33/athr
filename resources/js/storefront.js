@@ -43,6 +43,15 @@ window.toggleMobileMenu = () => {
     document.getElementById('main-nav')?.classList.toggle('is-open');
 };
 
+window.togglePasswordVisibility = (button) => {
+    const input = button.previousElementSibling;
+    const isHidden = input.type === 'password';
+
+    input.type = isHidden ? 'text' : 'password';
+    button.querySelector('.pw-eye-open')?.classList.toggle('hidden', isHidden);
+    button.querySelector('.pw-eye-closed')?.classList.toggle('hidden', !isHidden);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const flash = document.getElementById('flash-data');
 
